@@ -5,16 +5,14 @@ import org.slf4j.LoggerFactory;
 
 public class MainProject {
 	public static Logger log = LoggerFactory.getLogger(MainProject.class);
+	public static int  sommaFinale=0;
 
 	public static void main(String[] args) {
 
 		StampaConThread s1 = new StampaConThread('*');
 		StampaConThread s2 = new StampaConThread('#');
 
-		SommaConThread st1 = new SommaConThread();
-		SommaConThread st2 = new SommaConThread();
-		SommaConThread st3 = new SommaConThread();
-		SommaFinaleConThread s = new SommaFinaleConThread();
+		
 
 		// s1.start();
 		// s2.start();
@@ -22,58 +20,39 @@ public class MainProject {
 		int[] arrayNumeri = new int[3000];
 		for (int i = 0; i < arrayNumeri.length; i++) {
 			arrayNumeri[i] = (int) (Math.random() * 100);
-			//System.out.println((i + 1) + " : " + arrayNumeri[i]);
 		}
 
-		for (int i = 0; i < 1000; i++) {
-			st1 = new SommaConThread(arrayNumeri[i]);
-			st1.start();
-			try {
-				st1.join();
-				s.somma(st1.ritornaSomma());
-			} catch (Exception e) {
-				log.warn("ERRORE "+e);
-			}
-		}
-
-		for (int i = 1000; i < 2000; i++) {
-			st2 = new SommaConThread(arrayNumeri[i]);
-			st2.start();
-			try {
-				st2.join();
-				s.somma(st2.ritornaSomma());
-			} catch (Exception e) {
-				log.warn("ERRORE "+e);
-			}
-			
-		}
-
-		for (int i = 2000; i < 3000; i++) {
-			st3 = new SommaConThread(arrayNumeri[i]);
-			st3.start();
-			try {
-				st3.join();
-				s.somma(st3.ritornaSomma());
-			} catch (Exception e) {
-				log.warn("ERRORE "+e);
-			}
-		}
-
+		SommaConThread sm1=new SommaConThread(arrayNumeri,0,1000);
+		SommaConThread sm2=new SommaConThread(arrayNumeri,1000,2000);
+		SommaConThread sm3=new SommaConThread(arrayNumeri,2000,3000);
+		
+		SommaFinaleConThread s= new SommaFinaleConThread();
+		
+		
 		try {
-			st1.join();
-			st2.join();
-			st3.join();
+			sm1.run();
+			sm1.join();
+			s.somma(sm1.ritornaSomma());
+			sm2.run();
+			sm2.join();
+			s.somma(sm2.ritornaSomma());
+			sm3.run();
+			sm3.join();
+			s.somma(sm3.ritornaSomma());
+			System.out.println("Totale somma Thread 1: "+sm1.ritornaSomma());
+			System.out.println("Totale somma Thread 2: "+sm2.ritornaSomma());
+			System.out.println("Totale somma Thread 3: "+sm3.ritornaSomma());
 			s.ritornaTotale();
-		} catch (Exception e) {
-			log.warn("ERRORE "+e);
+			
+			
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
-
-
 
 		
-		RegistroPresenze u1=new RegistroPresenze("Hansel","Adjei",10);
-		u1.scriviNelRegistro(u1);
+		//RegistroPresenze u1=new RegistroPresenze("Hansel","Adjei",10);
+		//u1.scriviNelRegistro(u1);
 		
 
 	}

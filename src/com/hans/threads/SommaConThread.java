@@ -1,13 +1,17 @@
 package com.hans.threads;
 
 public class SommaConThread extends Thread {
-    private int n;
-    static public int somma=0;
-    public SommaConThread(int n){
-        this.n=n;
-    }
-    public SommaConThread(){
-        
+     private int somma=0;
+    
+    private int[] numeri;
+    private int indiceFinale;
+    private int indiceIniziale;
+    
+
+public SommaConThread(int[] numeri,int indiceIniziale, int indiceFinale){
+        this.numeri=numeri;
+        this.indiceIniziale=indiceIniziale;
+        this.indiceFinale=indiceFinale;
     }
 
 
@@ -17,7 +21,9 @@ public class SommaConThread extends Thread {
 
     @Override
     public void run(){
-        this.somma+=this.n;
-       // System.out.println("Somma= "+this.somma);
+    	for(int i=this.indiceIniziale;i<this.indiceFinale;i++) {
+    		this.somma+=this.numeri[i];
+    	}
+    	
     }
 }
