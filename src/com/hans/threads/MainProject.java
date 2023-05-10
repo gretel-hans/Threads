@@ -14,8 +14,7 @@ public class MainProject {
 
 		
 
-		// s1.start();
-		// s2.start();
+		
 
 		int[] arrayNumeri = new int[3000];
 		for (int i = 0; i < arrayNumeri.length; i++) {
@@ -30,6 +29,10 @@ public class MainProject {
 		
 		
 		try {
+			s1.start();
+			 s2.start();
+			 s1.join();
+			 s2.join();
 			sm1.run();
 			sm1.join();
 			s.somma(sm1.ritornaSomma());
@@ -37,7 +40,7 @@ public class MainProject {
 			sm2.join();
 			s.somma(sm2.ritornaSomma());
 			sm3.run();
-			sm3.join();
+			sm3.join();  
 			s.somma(sm3.ritornaSomma());
 			System.out.println("Totale somma Thread 1: "+sm1.ritornaSomma());
 			System.out.println("Totale somma Thread 2: "+sm2.ritornaSomma());
